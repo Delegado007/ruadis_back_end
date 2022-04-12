@@ -4,6 +4,8 @@ const routerApi = require('./routes');
 const app = express();
 const port = 3000;
 
+app.use(express.json());
+
 app.get('/', (req, res) => {
   res.send('Hola mi server en express');
 });
@@ -13,26 +15,6 @@ app.get('/nueva-ruta', (req, res) => {
 });
 
 routerApi(app);
-
-// app.get('/users', (req, res) => {
-//   const { limit, offset } = req.query;
-//   if (limit && offset) {
-//     res.json({
-//       limit,
-//       offset,
-//     });
-//   } else {
-//     res.send('No hay parametros');
-//   }
-// });
-
-// app.get('/categories/:categoryId/products/:prodcutId', (req, res) => {
-//   const { categoryId, prodcutId } = req.params;
-//   res.json({
-//     categoryId,
-//     prodcutId,
-//   });
-// });
 
 app.listen(port, () => {
   console.log('mi port' + port);

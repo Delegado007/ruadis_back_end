@@ -1,9 +1,15 @@
+const express = require('express');
+
 const productsRouter = require('./productsRouter');
-// const usersRouter = require('./usersRouter');
+const categoriesRouter = require('./categoriesRouter');
+const usersRouter = require('./usersRouter');
 
 function routerApi(app) {
-  app.use('/products', productsRouter);
-  // app.use('/users', usersRouter);
+  const router = express.Router();
+  app.use('/api/v1', router); //creando un end point global para todas las rutas
+  router.use('/products', productsRouter);
+  router.use('/categories', categoriesRouter);
+  router.use('/users', usersRouter);
 }
 
 module.exports = routerApi;
