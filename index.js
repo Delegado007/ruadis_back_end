@@ -33,6 +33,18 @@ app.get('/products/:id', (req, res) => {
   });
 });
 
+app.get('/users', (req, res) => {
+  const { limit, offset } = req.query;
+  if (limit && offset) {
+    res.json({
+      limit,
+      offset,
+    });
+  } else {
+    res.send('No hay parametros');
+  }
+});
+
 app.get('/categories/:categoryId/products/:prodcutId', (req, res) => {
   const { categoryId, prodcutId } = req.params;
   res.json({
