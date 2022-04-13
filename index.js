@@ -8,21 +8,21 @@ const {
 } = require('./middlewares/errorHandler');
 
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
 
 app.use(express.json());
 
 const whitelist = ['http://localhost:3000', 'http://127.0.0.1:5600'];
 const options = {
   origin: (origin, callback) => {
-    if (whitelist.includes(origin)) {
+    if (whitelist.includes(origin) || !origin) {
       callback(null, true);
     } else {
       callback(new Error('No permitido'));
     }
   },
 };
-app.use(cors()); // sin el filtrado de option le estariamos dando acceso a todos los origenes
+app.use(cors(options)); // sin el filtrado de option le estariamos dando acceso a todos los origenes
 
 app.get('/', (req, res) => {
   res.send('Hola mi server en express');
