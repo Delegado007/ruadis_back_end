@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon idenx.js",
+    "dev": "nodemon index.js",
     "start": "node index.js",
     "lint": "eslint"
   },
