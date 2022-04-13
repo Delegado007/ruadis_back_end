@@ -1,6 +1,6 @@
 function logErrors(err, req, res, next) {
   console.log('logErrors');
-  console.error(error);
+  console.error(err);
   next(err); // si enviamos error es un middlewares de tipo error
 }
 
@@ -11,4 +11,15 @@ function errorHandler(err, req, res, next) {
     stack: err.stack,
   });
 }
-module.exports = { logErrors, errorHandler };
+
+function boomErrorHandler(err, req, res, next) {
+  console.log(err.isBoom);
+  if (err.isBoom) {
+    //si es de tipo boom
+    const { output } = err; //leemos el output del error
+    res.status(output.statusCode).json(output.payload); //leemos que status code debemos responder
+  }
+  next(error); // si no es de tipo boom ejecutamos el siguiente middleware
+}
+
+module.exports = { logErrors, errorHandler, boomErrorHandler };
