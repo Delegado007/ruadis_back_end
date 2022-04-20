@@ -29,8 +29,9 @@ function ormErrorHandler(err, req, res, next) {
       statusCode: 409,
       message: err.name,
       errors: err.errors
-    })
+    });
   }
+  next(err);
 }
 
 module.exports = { logErrors, errorHandler, boomErrorHandler, ormErrorHandler };
