@@ -27,6 +27,19 @@ const OrderSchema = {
     field: 'created_at',
     defaultValue: Sequelize.NOW,
   },
+  total: {
+    type: DataTypes.VIRTUAL, // este campo como tal no exitira en la tabla por eso se usa el datatype virtual
+    get() {
+      if (this.items.length > 0) {
+        return this.items.reduce((total, item) => {
+          return total + (item.price * item.OrderProduct.amount);
+        }, 0)
+      }
+      return 0;
+      // esta consulta en el campo virtual la hace node como tal y no es optimo si la cantidad de items a calcular es elevada
+      // de ser asi se recomienda hacerlo con sql del lado del servidor para que sea mas optimo el tiempo de ejecucion
+    }
+  }
 }
 
 
