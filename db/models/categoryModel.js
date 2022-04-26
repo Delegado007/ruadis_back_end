@@ -21,10 +21,11 @@ const CategorySchema = {
   createdAt: {
     allowNull: false,
     type: DataTypes.DATE,
-    flied: 'created_at',
+    field: 'created_at',
     defaultValue: Sequelize.NOW,
   },
 }
+
 
 class Category extends Model {
 
@@ -32,7 +33,7 @@ class Category extends Model {
     this.hasMany(models.Product, {
       as: 'products',
       foreignKey: 'categoryId'
-    })
+    });
   }
 
   static config(sequelize) {
@@ -44,7 +45,5 @@ class Category extends Model {
     }
   }
 }
-
-
 
 module.exports = { Category, CategorySchema, CATEGORY_TABLE };

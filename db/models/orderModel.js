@@ -28,16 +28,14 @@ const OrderSchema = {
     defaultValue: Sequelize.NOW,
   },
   total: {
-    type: DataTypes.VIRTUAL, // este campo como tal no exitira en la tabla por eso se usa el datatype virtual
+    type: DataTypes.VIRTUAL,
     get() {
-      if (this.items.length > 0) {
+      if (this.items && this.items.length > 0) {
         return this.items.reduce((total, item) => {
           return total + (item.price * item.OrderProduct.amount);
-        }, 0)
+        }, 0);
       }
       return 0;
-      // esta consulta en el campo virtual la hace node como tal y no es optimo si la cantidad de items a calcular es elevada
-      // de ser asi se recomienda hacerlo con sql del lado del servidor para que sea mas optimo el tiempo de ejecucion
     }
   }
 }
@@ -49,13 +47,12 @@ class Order extends Model {
     this.belongsTo(models.Customer, {
       as: 'customer',
     });
-    // belongsToMany relacion muchos a muchos
     this.belongsToMany(models.Product, {
       as: 'items',
       through: models.OrderProduct,
       foreignKey: 'orderId',
       otherKey: 'productId'
-    })
+    });
   }
 
   static config(sequelize) {
