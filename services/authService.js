@@ -22,18 +22,6 @@ class AuthService {
     return user;
   }
 
-  signToken(user) {
-    const payload = {
-      sub: user.id,
-      role: user.role
-    }
-    const token = jwt.sign(payload, config.jwtSecret)
-    res.json({
-      user,
-      token
-    });
-  }
-
   async sendRecovery(email) {
     const user = await service.findByEmail(email);//busca el user con email
     if (!user) {
