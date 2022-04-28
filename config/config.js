@@ -12,7 +12,9 @@ const config = {
   dbUrl: process.env.DATABASE_URL,
   apiKey: process.env.APIKEY,
   jwtSecret: process.env.JWT_SECRET,
-  passwordCorreo: process.env.PASS_MAIL
+  passwordCorreo: process.env.PASS_MAIL,
+  mail: process.env.MAIL
+
 }
 
 module.exports = { config };

@@ -17,7 +17,7 @@ async function main() {
     port: 465,
     secure: true, // true for 465, false for other ports
     auth: {
-      user: 'maxharper2013@gmail.com',
+      user: config.mail,
       pass: config.passwordCorreo
     }
   });
