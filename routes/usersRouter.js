@@ -20,8 +20,7 @@ router.get('/', async (req, res, next) => {
   }
 });
 
-router.get(
-  '/:id',
+router.get('/:id',
   validatorHandler(getUserSchema, 'params'),
   async (req, res, next) => {
     try {
@@ -34,8 +33,7 @@ router.get(
   }
 );
 
-router.post(
-  '/',
+router.post('/',
   validatorHandler(createUserSchema, 'body'),
   async (req, res, next) => {
     try {
@@ -48,8 +46,7 @@ router.post(
   }
 );
 
-router.patch(
-  '/:id',
+router.patch('/:id',
   validatorHandler(getUserSchema, 'params'),
   validatorHandler(updateUserSchema, 'body'),
   async (req, res, next) => {
@@ -64,8 +61,7 @@ router.patch(
   }
 );
 
-router.delete(
-  '/:id',
+router.delete('/:id',
   validatorHandler(getUserSchema, 'params'),
   async (req, res, next) => {
     try {
