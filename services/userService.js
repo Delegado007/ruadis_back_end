@@ -20,6 +20,17 @@ class UserService {
     const rta = await models.User.findAll({
       include: ['customer']
     });
+    console.log(rta.forEach(element => {
+      delete element.dataValues.password;
+    }));
+
+    return rta;
+  }
+
+  async findByEmail(email) {
+    const rta = await models.User.findOne({
+      where: { email }
+    });
     return rta;
   }
 

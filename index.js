@@ -26,6 +26,8 @@ const options = {
 };
 app.use(cors(options)); // sin el filtrado de option le estariamos dando acceso a todos los origenes
 
+require('./utils/auth')
+
 app.get('/', (req, res) => {
   res.send('Hola mi server en express');
 });
