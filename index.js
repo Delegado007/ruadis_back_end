@@ -14,7 +14,12 @@ const port = process.env.PORT || 3000;
 
 app.use(express.json());
 
-const whitelist = ['http://localhost:3000', 'http://127.0.0.1:5600'];
+const whitelist = [
+  'http://localhost:3000',
+  'http://127.0.0.1:5600',
+  'http://localhost:3006',
+  'https://webpack-ruadis.netlify.app/'
+];
 const options = {
   origin: (origin, callback) => {
     if (whitelist.includes(origin) || !origin) {
