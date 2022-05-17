@@ -19,6 +19,10 @@ class AuthService {
       throw boom.unauthorized();
     }
     delete user.dataValues.password;
+    delete user.dataValues.role;
+    delete user.dataValues.id;
+    delete user.dataValues.createdAt;
+    delete user.dataValues.recoveryToken;
     return user;
   }
 
