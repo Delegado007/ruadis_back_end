@@ -2,9 +2,9 @@ const { Model, DataTypes, Sequelize } = require('sequelize');
 
 const { CATEGORY_TABLE } = require('./categoryModel');
 
-const PRODUCT_TABLE = 'products';
+const FILE_TABLE = 'files';
 
-const ProductSchema = {
+const FileSchema = {
   id: {
     allowNull: false,
     autoIncrement: true,
@@ -17,13 +17,9 @@ const ProductSchema = {
   },
   image: {
     type: DataTypes.STRING,
-    allowNull: false,
+    allowNull: true,
   },
-  description: {
-    type: DataTypes.TEXT,
-    allowNull: false,
-  },
-  price: {
+  pages: {
     type: DataTypes.INTEGER,
     allowNull: false,
   },
@@ -46,8 +42,7 @@ const ProductSchema = {
   }
 }
 
-
-class Product extends Model {
+class File extends Model {
 
   static associate(models) {
     this.belongsTo(models.Category, { as: 'category' });
@@ -56,11 +51,11 @@ class Product extends Model {
   static config(sequelize) {
     return {
       sequelize,
-      tableName: PRODUCT_TABLE,
-      modelName: 'Product',
+      tableName: FILE_TABLE,
+      modelName: 'File',
       timestamps: false
     }
   }
 }
 
-module.exports = { Product, ProductSchema, PRODUCT_TABLE };
+module.exports = { File, FileSchema, FILE_TABLE };

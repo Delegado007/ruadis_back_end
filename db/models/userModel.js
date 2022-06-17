@@ -38,10 +38,10 @@ const UserSchema = {
 
 class User extends Model {
   static associate(models) {
-    this.hasOne(models.Customer, {
-      as: 'customer',
+    this.hasMany(models.Order, {
+      as: 'orders',
       foreignKey: 'userId'
-    });
+    })
   }
 
   static config(sequelize) {

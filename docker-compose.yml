@@ -4,8 +4,8 @@ services:
   postgres:
     image: postgres:13
     environment:
-      - POSTGRES_DB=my_store
-      - POSTGRES_USER=franco
+      - POSTGRES_DB=ruadis_db
+      - POSTGRES_USER=delegado
       - POSTGRES_PASSWORD=admin123
     ports:
       - 5432:5432

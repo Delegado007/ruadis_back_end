@@ -1,22 +1,19 @@
 const { User, UserSchema } = require('./userModel');
-const { Customer, CustomerSchema } = require('./customerModel');
 const { Category, CategorySchema } = require('./categoryModel');
-const { Product, ProductSchema } = require('./productModel');
+const { File, FileSchema } = require('./fileModel');
 const { Order, OrderSchema } = require('./orderModel');
-const { OrderProduct, OrderProductSchema } = require('./order-productModel');
+const { OrderFile, OrderFileSchema } = require('./order-fileModel');
 
 function setupModels(sequelize) {
   User.init(UserSchema, User.config(sequelize));
-  Customer.init(CustomerSchema, Customer.config(sequelize));
   Category.init(CategorySchema, Category.config(sequelize));
-  Product.init(ProductSchema, Product.config(sequelize));
+  File.init(FileSchema, File.config(sequelize));
   Order.init(OrderSchema, Order.config(sequelize));
-  OrderProduct.init(OrderProductSchema, OrderProduct.config(sequelize));
+  OrderFile.init(OrderFileSchema, OrderFile.config(sequelize));
 
   User.associate(sequelize.models);
-  Customer.associate(sequelize.models);
   Category.associate(sequelize.models);
-  Product.associate(sequelize.models);
+  File.associate(sequelize.models);
   Order.associate(sequelize.models);
 }
 
