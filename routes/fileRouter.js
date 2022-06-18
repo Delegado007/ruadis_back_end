@@ -1,19 +1,19 @@
 const express = require('express');
 
-const ProductsService = require('../services/productService');
+const FileService = require('../services/fileService');
 const validatorHandler = require('../middlewares/validatorHandler');
 const {
-  createProdectSchema,
-  updateProductSchema,
-  getProductSchema,
-  queryProductSchema,
-} = require('../schemas/productSchemas');
+  createFileSchema,
+  updateFileSchema,
+  getFileSchema,
+  queryFileSchema,
+} = require('../schemas/fileSchemas');
 
 const router = express.Router();
-const service = new ProductsService();
+const service = new FileService();
 
 router.get('/',
-  validatorHandler(queryProductSchema, 'query'),
+  validatorHandler(queryFileSchema, 'query'),
   async (req, res, next) => {
     try {
       const products = await service.find(req.query);
@@ -33,7 +33,7 @@ router.get('/filter', (req, res, next) => {
 
 router.get(
   '/:id',
-  validatorHandler(getProductSchema, 'params'),
+  validatorHandler(getFileSchema, 'params'),
   async (req, res, next) => {
     try {
       const { id } = req.params; //solo recoge le id de todos los params
@@ -47,7 +47,7 @@ router.get(
 
 router.post(
   '/',
-  validatorHandler(createProdectSchema, 'body'),
+  validatorHandler(createFileSchema, 'body'),
   async (req, res, next) => {
     try {
       const body = req.body;
@@ -61,8 +61,8 @@ router.post(
 
 router.patch(
   '/:id',
-  validatorHandler(getProductSchema, 'params'),
-  validatorHandler(updateProductSchema, 'body'),
+  validatorHandler(getFileSchema, 'params'),
+  validatorHandler(updateFileSchema, 'body'),
   async (req, res, next) => {
     try {
       const { id } = req.params;

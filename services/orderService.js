@@ -6,18 +6,18 @@ class OrderService {
   constructor() { }
 
   async create(data) {
-    const customer = await models.Customer.findOne({
+    const user = await models.User.findOne({
       where: {
         '$user.id$': data.userId
       },
       include: ['user']
     })
-    console.log(customer)
-    if (!customer) {
+    console.log(user)
+    if (!user) {
       throw boom.badRequest('Customer not found');
     }
     const newOrder = await models.Order.create({
-      customerId: customer.id
+      userId: user.id
     });
     return newOrder;
   }
@@ -50,10 +50,9 @@ class OrderService {
     const order = await models.Order.findByPk(id, {
       include: [
         {
-          association: 'customer',
           include: ['user']
         },
-        'items'
+        'files'
       ]
     });
     return order;

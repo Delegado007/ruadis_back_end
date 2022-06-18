@@ -23,8 +23,8 @@ class ProductsService {
   }
 
   async create(data) {
-    const newProduct = await models.Product.create(data)
-    return newProduct;
+    const newFile = await models.File.create(data)
+    return newFile;
   }
 
   async find(query) {
@@ -37,21 +37,21 @@ class ProductsService {
       options.limit = limit;
       options.offset = offset;
     }
-    const { price } = query;
-    if (price) {
-      options.where.price = price;
+    const { pages } = query;
+    if (pages) {
+      options.where.pages = pages;
     }
 
-    const { price_min, price_max } = query;
-    if (price_min && price_max) {
-      options.where.price = {
-        [Op.gte]: price_min,
-        [Op.lte]: price_max,
+    const { pages_min, pages_max } = query;
+    if (pages_min && pages_max) {
+      options.where.pages = {
+        [Op.gte]: pages_min,
+        [Op.lte]: pages_max,
       };
     }
 
-    const porducts = await models.Product.findAll(options);
-    return porducts;
+    const files = await models.File.findAll(options);
+    return files;
   }
 
   async findOne(id) {
