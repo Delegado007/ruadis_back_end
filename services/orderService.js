@@ -16,7 +16,7 @@ class OrderService {
         {
           association: 'user'
         },
-        'files'
+        'items'
       ]
     });
     return order;

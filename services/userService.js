@@ -33,10 +33,20 @@ class UserService {
   }
 
   async findOne(id) {
-    const user = await models.User.findByPk(id);
+    const user = await models.User.findByPk(id, {
+      include: [
+        {
+          association: 'orders',
+          include: {
+            association: 'items',
+          }
+        }
+      ]
+    });
     if (!user) {
       throw boom.notFound('user not found')
     }
+    delete user.dataValues.password;
     return user;
   }
 

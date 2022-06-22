@@ -32,7 +32,7 @@ const OrderSchema = {
     get() {
       if (this.items && this.items.length > 0) {
         return this.items.reduce((total, item) => {
-          return total + (item.price * item.OrderProduct.amount);
+          return total + (item.pages * item.OrderFile.amount * 3);
         }, 0);
       }
       return 0;

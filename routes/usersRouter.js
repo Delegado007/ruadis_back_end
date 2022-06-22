@@ -25,6 +25,7 @@ router.get('/:id',
   async (req, res, next) => {
     try {
       const { id } = req.params;
+      console.log(id)
       const category = await service.findOne(id);
       res.json(category);
     } catch (error) {
