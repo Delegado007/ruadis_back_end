@@ -3,9 +3,8 @@
 const { USER_TABLE } = require('./../models/userModel');
 const { CATEGORY_TABLE } = require('./../models/categoryModel');
 const { FILE_TABLE } = require('./../models/fileModel');
-const { ORDER_TABLE } = require('./../models/orderModel');
+const { ORDER_TABLE } = require('./../models/orderModel')
 const { ORDER_FILE_TABLE } = require('./../models/order-fileModel');
-
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {

@@ -40,12 +40,13 @@ const OrderSchema = {
   }
 }
 
-
 class Order extends Model {
-
   static associate(models) {
+    this.belongsTo(models.User, {
+      as: 'user',
+    });
     this.belongsToMany(models.File, {
-      as: 'files',
+      as: 'items',
       through: models.OrderFile,
       foreignKey: 'orderId',
       otherKey: 'fileId'

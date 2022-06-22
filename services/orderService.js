@@ -1,4 +1,5 @@
 const boom = require('@hapi/boom');
+const { User } = require('../db/models/userModel');
 
 const { models } = require('./../libs/sequelize')
 
@@ -6,24 +7,24 @@ class OrderService {
   constructor() { }
 
   async create(data) {
-    const user = await models.User.findOne({
-      where: {
-        '$user.id$': data.userId
-      },
-      include: ['user']
-    })
-    console.log(user)
-    if (!user) {
-      throw boom.badRequest('Customer not found');
-    }
-    const newOrder = await models.Order.create({
-      userId: user.id
-    });
+    const newOrder = await models.Order.create(data);
     return newOrder;
+  }
+  async findOne(id) {
+    const order = await models.Order.findByPk(id, {
+      include: [
+        {
+          association: 'user'
+        },
+        'files'
+      ]
+    });
+    return order;
   }
 
   async addItem(data) {
-    const newItem = await models.OrderProduct.create(data);
+    console.log(data)
+    const newItem = await models.OrderFile.create(data);
     return newItem;
   }
 
@@ -46,17 +47,6 @@ class OrderService {
     return orders;
   }
 
-  async findOne(id) {
-    const order = await models.Order.findByPk(id, {
-      include: [
-        {
-          include: ['user']
-        },
-        'files'
-      ]
-    });
-    return order;
-  }
 
   async update(id, changes) {
     return {

@@ -17,12 +17,10 @@ class UserService {
   }
 
   async find() {
-    const rta = await models.User.findAll({
-      include: ['customer']
-    });
-    console.log(rta.forEach(element => {
+    const rta = await models.User.findAll();
+    rta.forEach(element => {
       delete element.dataValues.password;
-    }));
+    })
 
     return rta;
   }
