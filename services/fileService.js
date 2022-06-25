@@ -55,29 +55,38 @@ class ProductsService {
   }
 
   async findOne(id) {
-    const product = this.products.find((item) => item.id === id);
-    if (!product) {
+    const file = await models.File.findByPk(id);
+    if (!file) {
       throw boom.notFound('product not found');
     }
-    if (product.isBlock) {
+    if (file.isBlock) {
       throw boom.conflict('product is block');
     }
-    return product;
+    return file;
   }
 
   async update(id, changes) {
-    const index = this.products.findIndex((item) => item.id === id);
-    if (index === -1) {
+    const file = await models.File.findByPk(id)
+    if (!file) {
       // -1 lo devuelve si index no existe
-
       throw boom.notFound('product not found');
     }
-    const product = this.products[index];
-    this.products[index] = {
-      ...product, //obtenemos los datos de objeto como tal
+
+    let fileUpdated = {}
+    fileUpdated = {
+      ...file.dataValues, //obtenemos los datos de objeto como tal
       ...changes, //conbinamos el producto con los cambios que recibimos
     };
-    return this.products[index];
+    await models.File.update({
+      ...fileUpdated
+    },
+      {
+        where: {
+          id: id
+        }
+      })
+    console.log(fileUpdated)
+    return fileUpdated;
   }
 
   async delete(id) {

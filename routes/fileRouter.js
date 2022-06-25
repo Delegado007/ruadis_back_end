@@ -67,8 +67,8 @@ router.patch(
     try {
       const { id } = req.params;
       const body = req.body;
-      const product = await service.update(id, body);
-      res.json(product);
+      const fileUpdated = await service.update(id, body);
+      res.json(fileUpdated);
     } catch (error) {
       next(error);
     }
