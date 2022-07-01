@@ -14,10 +14,15 @@ const createOrderSchema = Joi.object({
   userId: userId.required(),
 });
 
+const deleteFileOrderSchema = Joi.object({
+  id: id.required(),
+  fileId: fileId.required(),
+});
+
 const additemSchema = Joi.object({
   orderId: orderId.required(),
   fileId: fileId.required(),
   amount: amount.required(),
 });
 
-module.exports = { getOrderSchema, createOrderSchema, additemSchema };
+module.exports = { getOrderSchema, createOrderSchema, additemSchema, deleteFileOrderSchema };

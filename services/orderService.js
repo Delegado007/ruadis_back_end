@@ -23,13 +23,25 @@ class OrderService {
   }
 
   async addItem(data) {
-    console.log(data)
     const newItem = await models.OrderFile.create(data);
     return newItem;
   }
 
-  async find() {
-    return [];
+  async findAll() {
+    const orders = await models.Order.findAll({
+      include: [
+        {
+          association: 'user'
+        },
+        'items'
+      ]
+    })
+    orders.map(item => {
+      delete item.user.dataValues.password
+      delete item.user.dataValues.recoveryToken
+    })
+
+    return orders;
   }
 
   async findByUser(userId) {
@@ -55,7 +67,16 @@ class OrderService {
     };
   }
 
-  async delete(id) {
+  async deleteItemOrder(id, fileId) {
+    const order = await models.Order.findByPk(id, {
+      include: [
+        {
+          association: 'user'
+        },
+        'items'
+      ]
+    });
+    console.log(order)
     return { id };
   }
 }

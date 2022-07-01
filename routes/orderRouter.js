@@ -3,7 +3,7 @@ const passport = require('passport');
 
 const OrderService = require('../services/orderService');
 const validatorHandler = require('../middlewares/validatorHandler');
-const { getOrderSchema, additemSchema, createOrderSchema } = require('../schemas/orderSchema');
+const { getOrderSchema, additemSchema, createOrderSchema, deleteFileOrderSchema } = require('../schemas/orderSchema');
 
 const router = express.Router();
 const service = new OrderService();
@@ -20,8 +20,18 @@ router.get('/:id',
     }
   });
 
+router.get('/',
+  async (req, res, next) => {
+    try {
+      const order = await service.findAll();
+      res.json(order);
+    } catch (error) {
+      next(error);
+    }
+  });
+
 router.post(
-  '/',
+  '/:id',
   validatorHandler(createOrderSchema, 'body'),
   async (req, res, next) => {
     try {
@@ -48,4 +58,21 @@ router.post(
     }
   }
 );
+
+router.delete(
+  '/:id/:fileId',
+  validatorHandler(deleteFileOrderSchema, 'body'),
+  async (req, res, next) => {
+    try {
+      const { id } = req.body;
+      const { fileId } = req.body;
+
+      const idItemDeleted = await service.deleteItemOrder(id, fileId);
+      res.status(200).json(idItemDeleted);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
 module.exports = router;
