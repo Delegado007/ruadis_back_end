@@ -60,15 +60,15 @@ router.post(
 );
 
 router.delete(
-  '/:id/:fileId',
+  '/:orderId/:fileId',
   validatorHandler(deleteFileOrderSchema, 'body'),
   async (req, res, next) => {
     try {
-      const { id } = req.body;
+      const { orderId } = req.body;
       const { fileId } = req.body;
 
-      const idItemDeleted = await service.deleteItemOrder(id, fileId);
-      res.status(200).json(idItemDeleted);
+      const itemsDeleted = await service.deleteItems(orderId, fileId);
+      res.status(200).json(itemsDeleted);
     } catch (error) {
       next(error);
     }

@@ -1,6 +1,4 @@
 const boom = require('@hapi/boom');
-const { User } = require('../db/models/userModel');
-
 const { models } = require('./../libs/sequelize')
 
 class OrderService {
@@ -67,18 +65,33 @@ class OrderService {
     };
   }
 
-  async deleteItemOrder(id, fileId) {
-    const order = await models.Order.findByPk(id, {
-      include: [
-        {
-          association: 'user'
-        },
-        'items'
-      ]
+  async deleteItemOrder(orderId, fileId) {
+    const fileInOrder = await models.OrderFile.findAll({
+      where: {
+        orderId: orderId,
+        fileId: fileId
+      }
     });
-    console.log(order)
-    return { id };
+    if (!fileInOrder) {
+      //si file en orden no existe matamos la consulta con un error boom 404
+      throw boom.notFound('File in order not found');
+    }
+    return { fileInOrder };
   }
+
+  async deleteItems(orderId, fileId) {
+    const resp = await models.OrderFile.destroy({
+      where: {
+        orderId: orderId,
+        fileId: fileId
+      }
+    });
+    if (resp === 0) {
+      throw boom.notFound('Nothing for delete, File in order not found');
+    }
+    return { resp };
+  }
+
 }
 
 module.exports = OrderService;

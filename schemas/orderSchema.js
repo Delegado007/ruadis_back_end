@@ -15,8 +15,8 @@ const createOrderSchema = Joi.object({
 });
 
 const deleteFileOrderSchema = Joi.object({
-  id: id.required(),
-  fileId: fileId.required(),
+  orderId: orderId.required(),
+  fileId: fileId.required()
 });
 
 const additemSchema = Joi.object({
