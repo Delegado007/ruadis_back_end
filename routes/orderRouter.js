@@ -20,15 +20,21 @@ router.get('/:id',
     }
   });
 
-router.get('/',
+router.post(
+  '/add-item',
+  passport.authenticate('jwt', { session: false }),
+  validatorHandler(additemSchema, 'body'),
   async (req, res, next) => {
     try {
-      const order = await service.findAll();
-      res.json(order);
+      const body = req.body;
+      console.log(body)
+      const newItem = await service.addItem(body);
+      res.status(201).json(newItem);
     } catch (error) {
       next(error);
     }
-  });
+  }
+);
 
 router.post(
   '/:id',
@@ -44,20 +50,16 @@ router.post(
   }
 );
 
-router.post(
-  '/add-item',
-  passport.authenticate('jwt', { session: false }),
-  validatorHandler(additemSchema, 'body'),
+router.get('/',
   async (req, res, next) => {
     try {
-      const body = req.body;
-      const newItem = await service.addItem(body);
-      res.status(201).json(newItem);
+      const order = await service.findAll();
+      res.json(order);
     } catch (error) {
       next(error);
     }
-  }
-);
+  });
+
 
 router.delete(
   '/:orderId/:fileId',
