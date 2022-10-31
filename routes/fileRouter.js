@@ -5,12 +5,14 @@ const validatorHandler = require('../middlewares/validatorHandler');
 const {
   createFileSchema,
   updateFileSchema,
+  getSearchSchema,
   getFileSchema,
   queryFileSchema,
 } = require('../schemas/fileSchemas');
 
 const router = express.Router();
 const service = new FileService();
+
 
 router.get('/',
   validatorHandler(queryFileSchema, 'query'),
@@ -23,27 +25,32 @@ router.get('/',
     }
   });
 
-router.get('/filter', (req, res, next) => {
-  try {
-    res.send('Yo soy un filter');
-  } catch (error) {
-    next(error);
-  }
-});
 
-router.get(
-  '/:id',
-  validatorHandler(getFileSchema, 'params'),
+// router.get(
+//   '/:id',
+//   validatorHandler(getFileSchema, 'params'),
+//   async (req, res, next) => {
+//     try {
+//       const { id } = req.params; //solo recoge le id de todos los params
+//       const product = await service.findOne(id);
+//       res.json(product);
+//     } catch (error) {
+//       next(error);
+//     }
+//   }
+// );
+router.get('/search/',
+  // validatorHandler(getSearchSchema, 'params'),
   async (req, res, next) => {
     try {
-      const { id } = req.params; //solo recoge le id de todos los params
-      const product = await service.findOne(id);
-      res.json(product);
+      const { searchvalue } = req.query;
+
+      const files = await service.search(searchvalue)
+      res.send(files);
     } catch (error) {
       next(error);
     }
-  }
-);
+  });
 
 router.post(
   '/',

@@ -64,15 +64,27 @@ class ProductsService {
     }
     return file;
   }
+  // SEARCH
+  async search(params) {
+    if (!params) {
+      throw boom.notFound('no params for search');
+    }
+    const files = await models.File.findAll({
+      where: {
+        name: {
+          [Op.iLike]: `%${params}%`,
+        }
+      }
+    });
+    return files;
+  }
 
   async update(id, changes) {
     const file = await models.File.findByPk(id) //buscamos un file en la db con el numero id
-
     if (!file) {
       //si file no existe matamos la consulta con un error boom 404
       throw boom.notFound('File not found');
     }
-
     let fileUpdated = {}
     fileUpdated = {
       ...file.dataValues, //obtenemos los datos de objeto como tal
@@ -87,7 +99,6 @@ class ProductsService {
           id: id
         }
       })
-
     return fileUpdated;
   }
 

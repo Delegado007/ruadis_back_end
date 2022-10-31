@@ -15,6 +15,10 @@ const FileSchema = {
     type: DataTypes.STRING,
     allowNull: false,
   },
+  path: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
   image: {
     type: DataTypes.STRING,
     allowNull: true,
@@ -23,9 +27,13 @@ const FileSchema = {
     type: DataTypes.INTEGER,
     allowNull: false,
   },
+  size: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+  },
   createdAt: {
     allowNull: false,
-    type: DataTypes.DATE,
+    type: DataTypes.DATEONLY,
     field: 'created_at',
     defaultValue: Sequelize.NOW,
   },
