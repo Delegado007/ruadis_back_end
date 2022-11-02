@@ -47,6 +47,16 @@ const FileSchema = {
     },
     onUpdate: 'CASCADE',
     onDelete: 'SET NULL'
+  },
+  prices: {
+    type: DataTypes.VIRTUAL,
+    get() {
+      return {
+        simple: this.pages * 12.5,
+        doble: this.pages * 6.25,
+      }
+    },
+
   }
 }
 
