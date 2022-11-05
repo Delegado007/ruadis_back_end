@@ -39,18 +39,23 @@ router.get('/',
 //     }
 //   }
 // );
-router.get('/search/',
+
+
+
+router.get('/search',
   // validatorHandler(getSearchSchema, 'params'),
   async (req, res, next) => {
     try {
-      const { searchvalue } = req.query;
+      const { searchvalue, offset, limit } = req.query;
 
-      const files = await service.search(searchvalue)
+      const files = await service.search(searchvalue, offset, limit)
       res.send(files);
     } catch (error) {
       next(error);
     }
   });
+
+
 
 router.post(
   '/',

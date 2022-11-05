@@ -33,24 +33,11 @@ class ProductsService {
       where: {}
     }
     const { limit, offset } = query;
-    if (limit && offset) {
-      options.limit = limit;
-      options.offset = offset;
-    }
-    const { pages } = query;
-    if (pages) {
-      options.where.pages = pages;
-    }
 
-    const { pages_min, pages_max } = query;
-    if (pages_min && pages_max) {
-      options.where.pages = {
-        [Op.gte]: pages_min,
-        [Op.lte]: pages_max,
-      };
-    }
-
-    const files = await models.File.findAll(options);
+    const files = await models.File.findAndCountAll({
+      offset: offset,
+      limit: limit
+    });
     return files;
   }
 
@@ -65,18 +52,20 @@ class ProductsService {
     return file;
   }
   // SEARCH
-  async search(params) {
+  async search(params, offset, limit) {
     if (!params) {
       throw boom.notFound('no params for search');
     }
-    const files = await models.File.findAll({
+    const { count, rows } = await models.File.findAndCountAll({
       where: {
         name: {
           [Op.iLike]: `%${params}%`,
         }
-      }
+      },
+      offset: offset,
+      limit: limit
     });
-    return files;
+    return { count, rows };
   }
 
   async update(id, changes) {
