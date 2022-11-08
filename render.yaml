@@ -1,7 +1,8 @@
 databases:
-  - name: backendruadis
-    databaseName: database
+  - name: ruadis_db
+    databaseName: ruadis_db
     user: delegado
+    password: admin123
 
  services:
  - type: pserv
@@ -10,10 +11,10 @@ databases:
    plan: starter plus
    repo: https://github.com/render-oss/docker-pgbouncer
    envVars:
-   - key: postgres://delegado:admin123@localhost:5432/ruadis_db
+   - key: DATABASE_URL
      fromDatabase:
-       name: mysite
-       property: connectionString
+       name: ruadis_db
+       property: postgres://delegado:admin123@localhost:5432/ruadis_db
    - key: POOL_MODE
      value: transaction
    - key: SERVER_RESET_QUERY
