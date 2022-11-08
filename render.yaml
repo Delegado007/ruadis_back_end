@@ -2,7 +2,6 @@ databases:
   - name: ruadis_db
     databaseName: ruadis_db
     user: delegado
-    password: admin123
 
 services:
   - type: web
