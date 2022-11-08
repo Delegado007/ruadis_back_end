@@ -10,7 +10,7 @@ databases:
    plan: starter plus
    repo: https://github.com/render-oss/docker-pgbouncer
    envVars:
-   - key: DATABASE_URL
+   - key: postgres://delegado:admin123@localhost:5432/ruadis_db
      fromDatabase:
        name: mysite
        property: connectionString
